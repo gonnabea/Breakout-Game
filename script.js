@@ -18,11 +18,12 @@ function initBlocks(){
 function controlCart(e){
     const pressedKey = e.key;
     console.log(pressedKey)
-    if(pressedKey === "ArrowRight"){
-        cart.style.right = `${positionIndex-=10}px`;
+    console.log(positionIndex)
+    if(pressedKey === "ArrowRight" && positionIndex > -44){
+        cart.style.right = `${positionIndex-=4}%`;
     }
-    else if(pressedKey === "ArrowLeft"){
-        cart.style.right = `${positionIndex+=10}px`;
+    else if(pressedKey === "ArrowLeft" && positionIndex < 44){
+        cart.style.right = `${positionIndex+=4}%`;
     }
 }
 
