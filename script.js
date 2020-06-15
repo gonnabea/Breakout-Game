@@ -1,4 +1,7 @@
 const cart = document.getElementById("cart");
+const modalBtn = document.getElementById("modalBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const modal = document.getElementById("modal");
 
 let positionIndex = 0;
 
@@ -6,15 +9,25 @@ function controlCart(e){
     const pressedKey = e.key;
     console.log(pressedKey)
     if(pressedKey === "ArrowRight"){
-        cart.style.right = `${positionIndex-=1}px`;
+        cart.style.right = `${positionIndex-=10}px`;
     }
     else if(pressedKey === "ArrowLeft"){
-        cart.style.right = `${positionIndex+=1}px`;
+        cart.style.right = `${positionIndex+=10}px`;
     }
 }
 
+function openModal(){
+    modal.style.animation = "modalOpen 1s forwards";    
+}
+
+function closeModal(){
+    modal.style.animation = "modalClose 1s forwards"; 
+}
+
 function init(){
-    window.addEventListener("keydown", controlCart)
+    window.addEventListener("keydown", controlCart);
+    modalBtn.addEventListener("click", openModal);
+    closeModalBtn.addEventListener("click", closeModal);
 }
 
 init();

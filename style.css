@@ -10,7 +10,7 @@ body{
     color: white;
     display: flex;
     flex-direction: column;
-    
+    overflow: auto;
     align-items: center;
 }
 
@@ -21,12 +21,6 @@ header{
     color: black;
     height: 10vh;
     width: 100vw;
-}
-
-.rule_btn{
-    position: absolute;
-    left: 20px;
-    top: 150px;
 }
 
 .main-screen{
@@ -54,6 +48,7 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 0 0 20px 20px;
 }
 
 .cart{
@@ -64,3 +59,44 @@ header{
     position: relative;
 }
 
+.modal_btn{
+    display: flex;
+    align-self: flex-start;
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+
+.modal{
+    height: 100vh;
+    width: 300px;
+    background-color: cornsilk;
+    color: black;
+    position: absolute;
+    left:0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    right: 300px;
+    transform: translateX(-300px);
+}
+
+@keyframes modalOpen{
+    0%{
+        transform: translateX(-300px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@keyframes modalClose{
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(-300px);
+    }
+}
