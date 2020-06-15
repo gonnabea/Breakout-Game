@@ -1,0 +1,46 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.background{
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    background-color: blanchedalmond;
+    color: black;
+    height: 10vh;
+    width: 100vw;
+}
+
+.rule_btn{
+    position: absolute;
+    left: 20px;
+    top: 150px;
+}
+
+.main-screen{
+    width: 80%;
+    height: 80vh;
+    background-color: white;
+    border-radius: 20px;
+    position: relative;
+    top: 5vh;
+}
+
+.score{
+    color: green;
+    position: absolute;
+    right: 50px;
+    top: 10px;
+}
