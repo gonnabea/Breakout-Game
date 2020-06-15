@@ -31,7 +31,8 @@ header{
     position: relative;
     top: 5vh;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .score{
@@ -81,6 +82,25 @@ header{
     text-align: center;
     right: 300px;
     transform: translateX(-300px);
+}
+
+.block-area{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 90%;
+    height: 30%;
+    align-self: center;
+    position: relative;
+    top: 10%;
+}
+
+.block{
+    background-color: orange;
+    width: 90%;
+    border: solid 1px white;
+    height: 20px;
+    justify-self: center;
+    box-shadow: 0 0 15px black;
 }
 
 @keyframes modalOpen{
