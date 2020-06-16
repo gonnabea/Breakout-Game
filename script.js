@@ -17,12 +17,13 @@ let x = mainScreen.width/2;
 let y = mainScreen.height-30;
 let dx = 2;
 let dy = -2;
+let rightPressed = false;
+let leftPressed = false;
 
 const ballRadius = 3;
-
 const paddleHeight = 5;
 const paddleWidth = 35;
-const paddleX = (mainScreen.width - paddleWidth) / 2;
+let paddleX = (mainScreen.width - paddleWidth) / 2;
 
 function draw() {
     ctx.clearRect(0, 0, mainScreen.width, mainScreen.height);
@@ -53,6 +54,13 @@ function drawPaddle() {
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
+    if(rightPressed && paddleX < mainScreen.width - paddleWidth){
+        paddleX += 3;
+        
+    }
+    if(leftPressed && paddleX > 0){
+        paddleX -= 3;
+    }
 }
 
 function initBlocks(){
@@ -64,60 +72,22 @@ function initBlocks(){
     
 }
 
-function controlCart(e){
-    console.log(e)
+function keyDownHandler(e){
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = true;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = true;
+    }
+}
 
-    const pressedKey = e.key;
-        if(pressedKey === "ArrowRight"){
-            if(e.repeat === true){
-                const moveRight = setInterval(() => {
-                    if(positionIndex > -44){
-                        cart.style.right = `${positionIndex-=0.1}%`;
-                    }
-                },5);
-                setTimeout(()=>{
-                    clearInterval(moveRight);
-                },100) // 0.1초 동안 0.005 초마다 -0.1%씩 움직임
-            }
-            else{
-                const moveRight = setInterval(() => {
-                    if(positionIndex > -44){
-                        cart.style.right = `${positionIndex-=0.2}%`;
-                        window.addEventListener("keyup", ()=>{
-                            clearInterval(moveRight);
-                        });
-                    }
-                },5);
-                setTimeout(()=>{
-                    clearInterval(moveRight);
-                },550) // 키를 꾹 누르고 있을 떄 repeat === true가 활성화되기 까지 길리는 시간 (약 0.5~0.6초)
-            }
-        }
-        else if(pressedKey === "ArrowLeft"){
-            if(e.repeat === true){
-                const moveLeft = setInterval(() => {
-                    if(positionIndex < 43){
-                        cart.style.right = `${positionIndex+=0.1}%`;
-                    }
-                },5);
-                setTimeout(()=>{
-                    clearInterval(moveLeft);
-                },100) // 0.1초 동안 0.005 초마다 -0.1%씩 움직임
-            }
-            else{
-                const moveLeft = setInterval(() => {
-                    if(positionIndex < 43){
-                        cart.style.right = `${positionIndex+=0.2}%`;
-                        window.addEventListener("keyup", ()=>{
-                            clearInterval(moveLeft);
-                        });
-                    }
-                },5);
-                setTimeout(()=>{
-                    clearInterval(moveLeft);
-                },550) // 키를 꾹 누르고 있을 떄 repeat === true가 활성화되기 까지 길리는 시간 (약 0.5~0.6초)
-            }
-        }
+function keyUpHandler(e){
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = false;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+    }
 }
 
 function openModal(){
@@ -131,11 +101,11 @@ function closeModal(){
 
 
 function init(){
-    window.addEventListener("keydown", controlCart);
     modalBtn.addEventListener("click", openModal);
     closeModalBtn.addEventListener("click", closeModal);
-    initBlocks()
-    setInterval(draw, 10);
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    setInterval(draw, 15);
 }
 
 init();
