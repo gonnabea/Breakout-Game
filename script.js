@@ -8,7 +8,7 @@ const mainScreen = document.getElementById("mainScreen");
 const ctx = mainScreen.getContext("2d");
 
 
-console.log(mainScreen.width)
+
 let positionIndex = 0;
 let ballDirectionDeg = 0;
 
@@ -36,8 +36,10 @@ function draw() {
     
     if(y + dy > mainScreen.height-ballRadius || y + dy < ballRadius) {
         dy = -dy;
+        console.log(y)
     }
     drawPaddle()
+    checkGameOver()
 }
 
 function drawBall(){
@@ -56,10 +58,18 @@ function drawPaddle() {
     ctx.closePath();
     if(rightPressed && paddleX < mainScreen.width - paddleWidth){
         paddleX += 3;
-        
     }
     if(leftPressed && paddleX > 0){
         paddleX -= 3;
+    }
+} 
+
+function checkGameOver(){
+    console.log(dy)
+    if(y - dy > mainScreen.height - ballRadius){
+        alert("GAME OVER");
+        document.location.reload();
+        clearInterval("checkGameOver()")
     }
 }
 
@@ -105,7 +115,7 @@ function init(){
     closeModalBtn.addEventListener("click", closeModal);
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
-    setInterval(draw, 15);
+    const interval = setInterval(draw, 15);
 }
 
 init();
