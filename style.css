@@ -6,7 +6,7 @@ body{
 .background{
     width: 100vw;
     height: 100vh;
-    background-color: black;
+    background-image: url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/andromeda-galaxy-royalty-free-image-1585682435.jpg');
     color: white;
     display: flex;
     flex-direction: column;
@@ -38,6 +38,7 @@ header{
 .score{
     color: green;
     position: absolute;
+    font-size: 25px;
     right: 50px;
     top: 10px;
 }
@@ -54,7 +55,7 @@ header{
 .cart{
     width: 10%;
     height: 60%;
-    background-color: cadetblue;
+    background-color: #9E9CFF;
     border-radius: 20px;
     position: relative;
 }
@@ -94,13 +95,23 @@ header{
 }
 
 .block{
-    background-color: orange;
+    background-color: grey;
     width: 90%;
     border: solid 1px white;
     height: 20px;
     justify-self: center;
     box-shadow: 0 10px 15px black;
     display: inline-block;
+}
+
+.ball{
+    border-radius: 100%;
+    width: 2vw;
+    height: 2vw;
+    position: absolute;
+    background-color: black;
+    top: 50%;
+    left: 50%;
 }
 
 @keyframes modalOpen{

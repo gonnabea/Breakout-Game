@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>벽돌깨기 By Jiwon</title>
+    <title>벽돌깨기</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,15 +25,15 @@
             <h1 class="title">Breakout!</h1>
         </header>
         <button class="modal_btn" id="modalBtn">How to do?</button>
-        <article class="main-screen" id="mainScreen">
+        <canvas class="main-screen" id="mainScreen">
             <span class="score">Score: 0</span>
             <section class="block-area" id="blockArea">
-                
             </section>
+            <div class="ball" id="ball"></div>
             <div class="cart-road" id="cartRoad">
                 <div class="cart" id="cart"></div>
             </div>
-        </article>
+        </canvas>
     </section>
     <script src="script.js"></script>
 </body>
