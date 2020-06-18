@@ -30,6 +30,7 @@ function draw() {
     drawBall();
     x += dx;
     y += dy;
+    checkGameOver()
     if(x + dx > mainScreen.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
@@ -39,7 +40,6 @@ function draw() {
         console.log(y)
     }
     drawPaddle()
-    checkGameOver()
 }
 
 function drawBall(){
@@ -66,10 +66,16 @@ function drawPaddle() {
 
 function checkGameOver(){
     console.log(dy)
-    if(y - dy > mainScreen.height - ballRadius){
-        alert("GAME OVER");
-        document.location.reload();
-        clearInterval("checkGameOver()")
+    if(y + dy >= mainScreen.height - ballRadius){
+        if(paddleX <= x && x<= paddleX + paddleWidth){
+            dy = -dy;
+            console.log(paddleX)
+        }else{
+            alert("GAME OVER");
+            document.location.reload();
+            clearInterval(checkGameOver)
+        }
+
     }
 }
 
