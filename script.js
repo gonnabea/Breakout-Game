@@ -23,6 +23,16 @@ let leftPressed = false;
 const ballRadius = 3;
 const paddleHeight = 5;
 const paddleWidth = 35;
+
+const brickRowCount = 3;
+const brickColumnCount = 5;
+const brickWidth = 20;
+const brickHeight = 5;
+const brickPaddingX = 23.5;
+const brickPaddingY = 10;
+const brickOffsetTop = 15;
+const brickOffsetLeft = 10;
+
 let paddleX = (mainScreen.width - paddleWidth) / 2;
 
 function draw() {
@@ -39,7 +49,8 @@ function draw() {
         dy = -dy;
         console.log(y)
     }
-    drawPaddle()
+    drawPaddle();
+    drawBricks();
 }
 
 function drawBall(){
@@ -64,6 +75,20 @@ function drawPaddle() {
     }
 } 
 
+function drawBricks() {
+    for(let j=0 ; j < 4 ; j++){
+    for(let i=0 ; i < 12 ; i++){
+    const brickX = brickOffsetLeft + brickPaddingX * i;
+    const brickY = brickOffsetTop + brickPaddingY * j;
+    ctx.beginPath();
+    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+    ctx.fillStyle = "skyblue";
+    ctx.fill();
+    ctx.closePath();
+    }
+}
+}
+
 function checkGameOver(){
     console.log(dy)
     if(y + dy >= mainScreen.height - ballRadius){
@@ -78,6 +103,7 @@ function checkGameOver(){
 
     }
 }
+
 
 function initBlocks(){
     for(let i=0; i<40 ; i++){
