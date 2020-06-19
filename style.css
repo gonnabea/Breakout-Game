@@ -6,7 +6,7 @@ body{
 .background{
     width: 100vw;
     height: 100vh;
-    background-image: url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/andromeda-galaxy-royalty-free-image-1585682435.jpg');
+    background-color: blueviolet;
     color: white;
     display: flex;
     flex-direction: column;
@@ -17,10 +17,13 @@ body{
 header{
     display: flex;
     justify-content: center;
-    background-color: blanchedalmond;
+    background-color: #2D3E50;
     color: black;
     height: 10vh;
     width: 100vw;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    box-shadow: 0 0 20px white;
 }
 
 .main-screen{
@@ -67,13 +70,15 @@ header{
     position: relative;
     top: 20px;
     left: 20px;
+    background-color: #2D3E50;
+    color: white;
 }
 
 .modal{
     height: 100vh;
-    width: 300px;
-    background-color: cornsilk;
-    color: black;
+    width: 350px;
+    background-color: #8C2FE3;
+    color: white;
     position: absolute;
     left:0;
     z-index: 1;
@@ -82,7 +87,10 @@ header{
     align-items: center;
     text-align: center;
     right: 300px;
-    transform: translateX(-300px);
+    transform: translateX(-350px);
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 0 20px floralwhite;
+    border-right: solid 2px #2D3E50;
 }
 
 .block-area{
@@ -115,9 +123,14 @@ header{
     left: 50%;
 }
 
+.close-modal-btn{
+    background-color: #2D3E50;
+    color:white;
+}
+
 @keyframes modalOpen{
     0%{
-        transform: translateX(-300px);
+        transform: translateX(-350px);
     }
     100%{
         transform: translateX(0);
@@ -129,6 +142,6 @@ header{
         transform: translateX(0);
     }
     100%{
-        transform: translateX(-300px);
+        transform: translateX(-350px);
     }
 }

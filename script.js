@@ -61,13 +61,12 @@ function draw() {
     }
     drawPaddle();
     drawBricks();
-    showScore();
 }
 
 function drawBall(){
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "grey";
     ctx.fill();
     ctx.closePath();
 }
@@ -75,7 +74,7 @@ function drawBall(){
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, mainScreen.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "grey";
     ctx.fill();
     ctx.closePath();
     if(rightPressed && paddleX < mainScreen.width - paddleWidth){
@@ -98,7 +97,7 @@ function drawBricks() {
         bricks[j][i].y = brickY;
             ctx.beginPath();
             ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = "skyblue";
+            ctx.fillStyle = "orange";
             ctx.fill();
             ctx.closePath(); 
         }
@@ -112,6 +111,7 @@ function hitDetect(brickX, brickY, j, i) {
             dy = -dy;
             bricks[j][i].status = 0;
             score+=1;
+            showScore();
         }
     }
 }
