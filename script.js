@@ -35,6 +35,15 @@ const brickOffsetLeft = 10;
 
 let paddleX = (mainScreen.width - paddleWidth) / 2;
 
+let bricks = [];
+
+for(let j=0 ; j < 4 ; j++ ){
+    bricks[j] = [];
+    for(let i=0 ; i < 12 ; i++){
+        bricks[j][i] = { x: 0, y: 0, status: 1}
+    }
+}
+
 function draw() {
     ctx.clearRect(0, 0, mainScreen.width, mainScreen.height);
     drawBall();
@@ -78,16 +87,32 @@ function drawPaddle() {
 function drawBricks() {
     for(let j=0 ; j < 4 ; j++){
     for(let i=0 ; i < 12 ; i++){
-    const brickX = brickOffsetLeft + brickPaddingX * i;
-    const brickY = brickOffsetTop + brickPaddingY * j;
-    ctx.beginPath();
-    ctx.rect(brickX, brickY, brickWidth, brickHeight);
-    ctx.fillStyle = "skyblue";
-    ctx.fill();
-    ctx.closePath();
+        
+        if(bricks[j][i].status == 1){
+            const brickX = brickOffsetLeft + brickPaddingX * i;
+            const brickY = brickOffsetTop + brickPaddingY * j;
+            hitDetect(brickX, brickY, j, i);
+        bricks[j][i].x = brickX;
+        bricks[j][i].y = brickY;
+            ctx.beginPath();
+            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+            ctx.fillStyle = "skyblue";
+            ctx.fill();
+            ctx.closePath(); 
+        }
     }
 }
 }
+
+function hitDetect(brickX, brickY, j, i) {
+    if( bricks[j][i].status == 1){
+        if(brickX < x && brickX + brickWidth > x && brickY < y && brickY + brickHeight > y){
+            dy = -dy;
+            bricks[j][i].status = 0;
+        }
+    }
+}
+
 
 function checkGameOver(){
     console.log(dy)
@@ -104,15 +129,6 @@ function checkGameOver(){
     }
 }
 
-
-function initBlocks(){
-    for(let i=0; i<40 ; i++){
-        const block = document.createElement("div");
-        block.className = "block";
-        blockArea.appendChild(block);
-    }
-    
-}
 
 function keyDownHandler(e){
     if(e.key == "Right" || e.key == "ArrowRight") {
