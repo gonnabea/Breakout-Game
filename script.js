@@ -6,7 +6,7 @@ const blockArea = document.getElementById("blockArea");
 const ball = document.getElementById("ball");
 const mainScreen = document.getElementById("mainScreen");
 const ctx = mainScreen.getContext("2d");
-
+const scoreArea = document.getElementById("score");
 
 
 let positionIndex = 0;
@@ -19,8 +19,9 @@ let dx = 2;
 let dy = -2;
 let rightPressed = false;
 let leftPressed = false;
+let score = 0;
 
-const ballRadius = 3;
+const ballRadius = 3.5;
 const paddleHeight = 5;
 const paddleWidth = 35;
 
@@ -60,6 +61,7 @@ function draw() {
     }
     drawPaddle();
     drawBricks();
+    showScore();
 }
 
 function drawBall(){
@@ -109,10 +111,20 @@ function hitDetect(brickX, brickY, j, i) {
         if(brickX < x && brickX + brickWidth > x && brickY < y && brickY + brickHeight > y){
             dy = -dy;
             bricks[j][i].status = 0;
+            score+=1;
         }
     }
 }
-
+/*
+function scoreScreen() {
+    ctx.font = "8px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText(`score: ${score}`,250,10);
+}
+*/
+function showScore() {
+    scoreArea.innerHTML = `SCORE: ${score}`;
+}
 
 function checkGameOver(){
     console.log(dy)
