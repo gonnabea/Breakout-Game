@@ -1,119 +1,117 @@
-const cart = document.getElementById("cart");
-const modalBtn = document.getElementById("modalBtn");
-const closeModalBtn = document.getElementById("closeModalBtn");
-const modal = document.getElementById("modal");
-const blockArea = document.getElementById("blockArea");
-const ball = document.getElementById("ball");
-const mainScreen = document.getElementById("mainScreen");
-const ctx = mainScreen.getContext("2d");
-const scoreArea = document.getElementById("score");
+const cart = document.getElementById("cart")
+const modalBtn = document.getElementById("modalBtn")
+const closeModalBtn = document.getElementById("closeModalBtn")
+const modal = document.getElementById("modal")
+const blockArea = document.getElementById("blockArea")
+const ball = document.getElementById("ball")
+const mainScreen = document.getElementById("mainScreen")
+const ctx = mainScreen.getContext("2d")
+const scoreArea = document.getElementById("score")
 
+let positionIndex = 0
+let ballDirectionDeg = 0
 
-let positionIndex = 0;
-let ballDirectionDeg = 0;
+let x = mainScreen.width / 2
+let y = mainScreen.height - 30
+let dx = 2
+let dy = -2
+let rightPressed = false
+let leftPressed = false
+let score = 0
+let interval // 게임 프레임 생성 간격
 
+const ballRadius = 3.5
+const paddleHeight = 5
+const paddleWidth = 35
 
-let x = mainScreen.width/2;
-let y = mainScreen.height-30;
-let dx = 2;
-let dy = -2;
-let rightPressed = false;
-let leftPressed = false;
-let score = 0;
+const brickRowCount = 3
+const brickColumnCount = 5
+const brickWidth = 20
+const brickHeight = 5
+const brickPaddingX = 23.5
+const brickPaddingY = 10
+const brickOffsetTop = 15
+const brickOffsetLeft = 10
 
-const ballRadius = 3.5;
-const paddleHeight = 5;
-const paddleWidth = 35;
+let paddleX = (mainScreen.width - paddleWidth) / 2
 
-const brickRowCount = 3;
-const brickColumnCount = 5;
-const brickWidth = 20;
-const brickHeight = 5;
-const brickPaddingX = 23.5;
-const brickPaddingY = 10;
-const brickOffsetTop = 15;
-const brickOffsetLeft = 10;
+let bricks = []
 
-let paddleX = (mainScreen.width - paddleWidth) / 2;
-
-let bricks = [];
-
-for(let j=0 ; j < 4 ; j++ ){
-    bricks[j] = [];
-    for(let i=0 ; i < 12 ; i++){
-        bricks[j][i] = { x: 0, y: 0, status: 1}
-    }
+for (let j = 0; j < 4; j++) {
+  bricks[j] = []
+  for (let i = 0; i < 12; i++) {
+    bricks[j][i] = { x: 0, y: 0, status: 1 }
+  }
 }
 
 function draw() {
-    ctx.clearRect(0, 0, mainScreen.width, mainScreen.height);
-    drawBall();
-    x += dx;
-    y += dy;
-    checkGameOver()
-    if(x + dx > mainScreen.width-ballRadius || x + dx < ballRadius) {
-        dx = -dx;
-    }
-    
-    if(y + dy > mainScreen.height-ballRadius || y + dy < ballRadius) {
-        dy = -dy;
-        console.log(y)
-    }
-    drawPaddle();
-    drawBricks();
+  ctx.clearRect(0, 0, mainScreen.width, mainScreen.height)
+  drawBall()
+  x += dx
+  y += dy
+  checkGameOver()
+  if (x + dx > mainScreen.width - ballRadius || x + dx < ballRadius) {
+    dx = -dx
+  }
+
+  if (y + dy > mainScreen.height - ballRadius || y + dy < ballRadius) {
+    dy = -dy
+    console.log(y)
+  }
+  drawPaddle()
+  drawBricks()
 }
 
-function drawBall(){
-    ctx.beginPath();
-    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "grey";
-    ctx.fill();
-    ctx.closePath();
+function drawBall() {
+  ctx.beginPath()
+  ctx.arc(x, y, ballRadius, 0, Math.PI * 2)
+  ctx.fillStyle = "grey"
+  ctx.fill()
+  ctx.closePath()
 }
 
 function drawPaddle() {
-    ctx.beginPath();
-    ctx.rect(paddleX, mainScreen.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "grey";
-    ctx.fill();
-    ctx.closePath();
-    if(rightPressed && paddleX < mainScreen.width - paddleWidth){
-        paddleX += 3;
-    }
-    if(leftPressed && paddleX > 0){
-        paddleX -= 3;
-    }
-} 
+  ctx.beginPath()
+  ctx.rect(paddleX, mainScreen.height - paddleHeight, paddleWidth, paddleHeight)
+  ctx.fillStyle = "grey"
+  ctx.fill()
+  ctx.closePath()
+  if (rightPressed && paddleX < mainScreen.width - paddleWidth) {
+    paddleX += 3
+  }
+  if (leftPressed && paddleX > 0) {
+    paddleX -= 3
+  }
+}
 
 function drawBricks() {
-    for(let j=0 ; j < 4 ; j++){
-    for(let i=0 ; i < 12 ; i++){
-        
-        if(bricks[j][i].status == 1){
-            const brickX = brickOffsetLeft + brickPaddingX * i;
-            const brickY = brickOffsetTop + brickPaddingY * j;
-            hitDetect(brickX, brickY, j, i);
-        bricks[j][i].x = brickX;
-        bricks[j][i].y = brickY;
-            ctx.beginPath();
-            ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = "orange";
-            ctx.fill();
-            ctx.closePath(); 
-        }
+  for (let j = 0; j < 4; j++) {
+    for (let i = 0; i < 12; i++) {
+      if (bricks[j][i].status == 1) {
+        const brickX = brickOffsetLeft + brickPaddingX * i
+        const brickY = brickOffsetTop + brickPaddingY * j
+        hitDetect(brickX, brickY, j, i)
+        bricks[j][i].x = brickX
+        bricks[j][i].y = brickY
+        ctx.beginPath()
+        ctx.rect(brickX, brickY, brickWidth, brickHeight)
+        ctx.fillStyle = "orange"
+        ctx.fill()
+        ctx.closePath()
+      }
     }
-}
+  }
 }
 
 function hitDetect(brickX, brickY, j, i) {
-    if( bricks[j][i].status == 1){
-        if(brickX < x && brickX + brickWidth > x && brickY < y && brickY + brickHeight > y){
-            dy = -dy;
-            bricks[j][i].status = 0;
-            score+=1;
-            showScore();
-        }
+  if (bricks[j][i].status == 1) {
+    if (brickX < x && brickX + brickWidth > x && brickY < y && brickY + brickHeight > y) {
+      dy = -dy
+      bricks[j][i].status = 0
+      score += 1
+      showScore()
     }
+  }
 }
 /*
 function scoreScreen() {
@@ -123,59 +121,63 @@ function scoreScreen() {
 }
 */
 function showScore() {
-    scoreArea.innerHTML = `SCORE: ${score}`;
+  scoreArea.innerHTML = `SCORE: ${score}`
 }
 
-function checkGameOver(){
-    console.log(dy)
-    if(y + dy >= mainScreen.height - ballRadius){
-        if(paddleX <= x && x<= paddleX + paddleWidth){
-            dy = -dy;
-            console.log(paddleX)
-        }else{
-            alert("GAME OVER");
-            document.location.reload();
-            clearInterval(checkGameOver)
-        }
-
+function checkGameOver() {
+  console.log(dy)
+  if (y + dy >= mainScreen.height - ballRadius) {
+    if (paddleX <= x && x <= paddleX + paddleWidth) {
+      dy = -dy
+      console.log(paddleX)
+    } else {
+      console.log("GAME OVER")
+      document.location.reload()
+      clearInterval(checkGameOver)
     }
+  }
 }
 
-
-function keyDownHandler(e){
-    if(e.key == "Right" || e.key == "ArrowRight") {
-        rightPressed = true;
-    }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = true;
-    }
+function keyDownHandler(e) {
+  if (e.key == "Right" || e.key == "ArrowRight") {
+    rightPressed = true
+  } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    leftPressed = true
+  }
 }
 
-function keyUpHandler(e){
-    if(e.key == "Right" || e.key == "ArrowRight") {
-        rightPressed = false;
-    }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = false;
-    }
+function keyUpHandler(e) {
+  if (e.key == "Right" || e.key == "ArrowRight") {
+    rightPressed = false
+  } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    leftPressed = false
+  }
 }
 
-function openModal(){
-    modal.style.animation = "modalOpen 1s forwards";    
+function openModal() {
+  modal.style.animation = "modalOpen 1s forwards"
+  pauseGame()
 }
 
-function closeModal(){
-    modal.style.animation = "modalClose 1s forwards"; 
+function closeModal() {
+  modal.style.animation = "modalClose 1s forwards"
+  playGame()
 }
 
-
-
-function init(){
-    modalBtn.addEventListener("click", openModal);
-    closeModalBtn.addEventListener("click", closeModal);
-    document.addEventListener("keydown", keyDownHandler, false);
-    document.addEventListener("keyup", keyUpHandler, false);
-    const interval = setInterval(draw, 15);
+function pauseGame() {
+  clearInterval(interval)
 }
 
-init();
+function playGame() {
+  interval = setInterval(draw, 15)
+}
+
+function init() {
+  modalBtn.addEventListener("click", openModal)
+  closeModalBtn.addEventListener("click", closeModal)
+  document.addEventListener("keydown", keyDownHandler, false)
+  document.addEventListener("keyup", keyUpHandler, false)
+  playGame()
+}
+
+init()
